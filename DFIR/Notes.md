@@ -443,3 +443,76 @@ In Windows, you can execute the following command from the command line:
 ```powershell           
 set SSLKEYLOGFILE=C:\sslkeylog.log
 ```
+
+## iOSbackup Library
+
+```bash
+pip3 install iOSbackup --user
+pip3 install iOSbackup
+#Once installed, open the Python 3 interactive console and verify everything is set up correctly. You can launch the interactive console by typing “ python3 ” and press Enter. The console will then wait for user commands:
+Python 3.11.7 (main, Dec 15 2023, 12:09:04) [Clang 14.0.6 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>from iOSbackup import iOSbackup
+>>> iOSbackup.getDeviceList()
+[{'udid': '00000000-000000040FF300DD', 'name': 'iPad (3)', 'ios': '17.0.3', 'serial': 'LETSDEFEND001', 'type': 'iPad8,3', 'encrypted': False, 'passcodeSet': True, 'date': datetime.datetime(2024, 2, 15, 11, 53, 43, 299197, tzinfo=datetime.timezone.utc)}, {'udid': '00000000-00000004DD50CDDE', 'name': 'iPhone-1', 'ios': '17.1.1', 'serial': 'LETSDEFEND02', 'type': 'iPhone15,3', 'encrypted': False, 'passcodeSet': True, 'date': datetime.datetime(2024, 1, 31, 11, 8, 58, 816014, tzinfo=datetime.timezone.utc)}]
+#After viewing the device backup list, you can proceed to the information-gathering phase for the identified device. First, specify the device you are working with:
+>>>bck=iOSbackup(udid="00000000-00000004DD50CDDE")
+#Note : If the backup file is not in the standard directory or you are working with a backup directory moved to another location, you will need to specify the directory using the “backuproot=” parameter.
+bck=iOSbackup(
+                    udid="00456030-000E4412342802E",
+                    cleartextpassword="mypassword",
+                    backuproot='/path/to/backup/directory'
+)
+>>> infoKeys=[
+...   'Build Version', 'Device Name', 'Display Name', 'GUID', 'ICCID',
+...   'IMEI', 'IMEI 2', 'Last Backup Date',  'Phone Number',
+...   'Product Name', 'Product Type', 'Product Version', 'Serial Number',
+...   'Target Identifier', 'Target Type', 'Unique Identifier',
+...   'macOS Build Version', 'macOS Version'
+... ]
+>>> for i in infoKeys:
+...     print(f'
+```
+
+full code with output:
+```bash
+Python 3.11.7 (main, Dec 15 2023, 12:09:04) [Clang 14.0.6 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from iOSbackup import iOSbackup
+>>> iOSbackup.getDeviceList()
+[{'udid': '00000000-000000040FF300DD', 'name': 'iPad (3)', 'ios': '17.0.3', 'serial': 'LETSDEFEND001', 'type': 'iPad8,3', 'encrypted': False, 'passcodeSet': True, 'date': datetime.datetime(2024, 2, 15, 11, 53, 43, 299197, tzinfo=datetime.timezone.utc)}, {'udid': '00000000-00000004DD50CDDE', 'name': 'iPhone-1', 'ios': '17.1.1', 'serial': 'LETSDEFEND02', 'type': 'iPhone15,3', 'encrypted': False, 'passcodeSet': True, 'date': datetime.datetime(2024, 1, 31, 11, 8, 58, 816014, tzinfo=datetime.timezone.utc)}]
+>>> bck=iOSbackup(udid="00000000-00000004DD50CDDE")
+>>> infoKeys=[
+...   'Build Version', 'Device Name', 'Display Name', 'GUID', 'ICCID',
+...   'IMEI', 'IMEI 2', 'Last Backup Date',  'Phone Number',
+...   'Product Name', 'Product Type', 'Product Version', 'Serial Number',
+...   'Target Identifier', 'Target Type', 'Unique Identifier',
+...   'macOS Build Version', 'macOS Version'
+... ]
+>>> for i in infoKeys:
+...     print(f'
+{i}
+: 
+{bck.info[i]}
+')
+...
+Build Version: 21B91
+Device Name: iPhone-1
+Display Name: iPhone-1
+GUID: LETSDEFEND_REDACTED
+ICCID: 89_LETSDEFEND_REDACTED_11
+IMEI: 000000000000000
+IMEI 2: 000000000000000
+Last Backup Date: 2024-01-31 11:09:06
+Phone Number: +1 (555) 555 55 55
+Product Name: iPhone 14 Pro Max
+Product Type: iPhone15,3
+Product Version: 17.1.1
+Serial Number: 1234567890
+Target Identifier: 00008120-00C4C4C4C4C4C4C4
+Target Type: Device
+Unique Identifier: 00008120-00C4C4C4C4C4C4C4
+macOS Build Version: 22F82
+macOS Version: 13.4.1
+>>>
+```
